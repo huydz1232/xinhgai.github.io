@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi Người Tôi Thương ❤️ - Phiên Bản Đặc Biệt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ff6b8b;
+            --dark-pink: #ff4757;
+            --light-pink: #ffc8dd;
+            --gold: #ffd700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #ffc8dd, #ffafcc, #bde0fe);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: background 1s;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transform: scale(0.95);
+            opacity: 0;
+            animation: fadeIn 0.8s forwards 0.5s;
+            transition: all 0.5s;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--dark-pink);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, var(--pink), var(--dark-pink));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 107, 139, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--dark-pink), var(--pink));
+            transition: all 0.4s;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 139, 0.6);
+        }
+        
+        .btn:hover::before {
+            left: 0;
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-no {
+            background: linear-gradient(to right, #b8b8b8, #888);
+        }
+        
+        .btn-no::before {
+            background: linear-gradient(to right, #888, #b8b8b8);
+        }
+        
+        .heart {
+            font-size: 2rem;
+            display: inline-block;
+            animation: float 2s ease-in-out infinite;
+            margin: 15px 0;
+        }
+        
+        .hearts-container, .flowers-container, .fireworks-container, .stars-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            top: 0;
+            left: 0;
+        }
+        
+        .heart-particle, .flower, .firework, .star {
+            position: absolute;
+            opacity: 0;
+            animation: fall linear forwards;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 20px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.5s;
+        }
+        
+        .photo-frame:hover {
+            transform: rotate(360deg);
+            border-color: var(--gold);
+        }
+        
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+        
+        .photo-frame:hover img {
+            transform: scale(1.1);
+        }
+        
+        .countdown {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: var(--dark-pink);
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+        
+        .quiz-option {
+            background: white;
+            padding: 12px 15px;
+            margin: 10px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--light-pink);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quiz-option:hover {
+            background: var(--light-pink);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.3);
+        }
+        
+        .quiz-option.correct {
+            background: #7bed9f;
+            border-color: #2ed573;
+            color: white;
+            animation: correctAnswer 0.5s;
+        }
+        
+        .quiz-option.wrong {
+            background: #ff6b81;
+            border-color: #ff4757;
+            color: white;
+            animation: wrongAnswer 0.5s;
+        }
+        
+        .love-reason {
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid var(--light-pink);
+            margin: 10px 0;
+            font-family: 'Montserrat', sans-serif;
+            resize: none;
+            transition: all 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .love-reason:focus {
+            outline: none;
+            border-color: var(--pink);
+            box-shadow: 0 0 10px rgba(255, 107, 139, 0.3);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        @keyframes fall {
+            to {
+                top: 100%;
+                opacity: 1;
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(20);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes correctAnswer {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 20px rgba(46, 213, 115, 0.8);
+            }
+        }
+        
+        @keyframes wrongAnswer {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            20%, 60% {
+                transform: translateX(-5px);
+            }
+            40%, 80% {
+                transform: translateX(5px);
+            }
+        }
+        
+        @keyframes starGlow {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+        
+        @keyframes rainbow {
+            0% { color: #ff0000; }
+            14% { color: #ff7f00; }
+            28% { color: #ffff00; }
+            42% { color: #00ff00; }
+            57% { color: #0000ff; }
+            71% { color: #4b0082; }
+            85% { color: #9400d3; }
+            100% { color: #ff0000; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .rainbow-text {
+            animation: rainbow 3s linear infinite;
+        }
+        
+        /* Music control */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+        }
+        
+        .music-control:hover {
+            transform: scale(1.1);
+            background: var(--light-pink);
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+        }
+        
+        /* Typing effect */
+        .typing {
+            border-right: 2px solid;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        /* Floating kiss */
+        .floating-kiss {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatKiss 4s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes floatKiss {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="hearts-container" id="heartsContainer"></div>
+    <div class="flowers-container" id="flowersContainer"></div>
+    <div class="fireworks-container" id="fireworksContainer"></div>
+    <div class="stars-container" id="starsContainer"></div>
+    
+    <!-- Music control -->
+    <div class="music-control" id="musicControl">🎵</div>
+    <audio id="bgMusic" loop>
+        <source src="NgayDauTien-DucPhuc-7129810.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Step 1: Initial message -->
+    <div class="container" id="step1">
+        <div class="photo-frame">
+            <img src="coc.jpg" alt="Người tôi thương">
+        </div>
+        <h1>Gửi đến người tôi thương ❤️</h1>
+        <p class="typing" id="typingText"></p>
+        <button class="btn" onclick="nextStep('step1', 'step2')">Mở thư tình này</button>
+    </div>
+    
+    <!-- Step 2: Quiz -->
+    <div class="container hidden" id="step2">
+        <h1>Thử thách nhỏ nè! 💪</h1>
+        <p>Trả lời đúng câu này mới được xem tiếp nhé 😉</p>
+        <p>"Tôi tên là gì hở?"</p>
+        <div class="quiz-options">
+            <div class="quiz-option" onclick="checkAnswer(this, false)">Tuấn</div>
+            <div class="quiz-option" onclick="checkAnswer(this, false)">A.M</div>
+            <div class="quiz-option" onclick="checkAnswer(this, true)">Nguyễn Đức Trường Huy</div>
+            <div class="quiz-option" onclick="checkAnswer(this, false)">Jack</div>
+        </div>
+        <p id="hintText" style="color: #888; font-size: 0.8rem; margin-top: 10px;"></p>
+    </div>
+    
+    <!-- Step 3: Why love me -->
+    <div class="container hidden" id="step3">
+        <h1>❤️ Vì sao em yêu tôi? ❤️</h1>
+        <p>Hãy nói lý do bạn thích tôi đi nào... (nói thật lòng nhé)</p>
+        <textarea class="love-reason" id="loveReason" placeholder="Viết lý do tại đây..."></textarea>
+        <button class="btn" onclick="showRealReason()">Gửi lý do</button>
+        <div id="characterCount" style="font-size: 0.8rem; color: #888; text-align: right;">0/200 ký tự</div>
+    </div>
+    
+    <!-- Step 4: Real reason -->
+    <div class="container hidden" id="step4">
+        <h1>Thực ra tôi biết mà 😎</h1>
+        <p>Lý do thực sự là:</p>
+        <p class="pulse rainbow-text" style="font-size: 1.8rem; font-weight: bold; margin: 20px 0;">"VÌ BẠN ĐẸP TRAI VL!" 💯</p>
+        <img src="IMG_2316.jpg" width="200" style="border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+        <p style="margin-top: 20px;">Giờ thì bạn có đồng ý làm người yêu tôi không?</p>
+        <div>
+            <button class="btn" onclick="nextStep('step4', 'step5-yes')">Có, đồng ý! ❤️</button>
+            <button class="btn btn-no" id="btnNo" onmouseover="runAway()">Không đồng ý 😢</button>
+        </div>
+    </div>
+    
+    <!-- Step 5: Yes response -->
+    <div class="container hidden pulse" id="step5-yes">
+        <div class="heart">💖</div>
+        <h1>Yay! Tôi rất vui! 🎉</h1>
+        <p>Yêu em nhiều lắm luôn á 😍</p>
+        <p>Chúng ta chính thức hẹn hò từ hôm nay nhé?</p>
+        <div class="countdown" id="countdown"></div>
+        <button class="btn" onclick="showFinal()">Xác nhận ngay</button>
+    </div>
+    
+    <!-- Step 6: Final celebration -->
+    <div class="container hidden" id="step6">
+        <div class="heart">💕</div>
+        <h1>Chúc mừng chúng ta! 🥂</h1>
+        <p>Tuy chúng ta xa nhau nhưng anh vẫn luôn nhớ em mọi lúc. Cô bé của anh luôn mạnh khỏe và nhiều niềm vui nhé. Anh vẫn đang cố gắng để chờ ngày được gặp em!!!</p>
+        <p>Yêu em nhiều ❤️</p>
+        <button class="btn" onclick="location.reload()">Xem lại từ đầu</button>
+    </div>
+    
+    <script>
+        // Initialize elements
+        const music = document.getElementById('bgMusic');
+        const musicControl = document.getElementById('musicControl');
+        const btnNo = document.getElementById('btnNo');
+        const countdownEl = document.getElementById('countdown');
+        const heartsContainer = document.getElementById('heartsContainer');
+        const flowersContainer = document.getElementById('flowersContainer');
+        const fireworksContainer = document.getElementById('fireworksContainer');
+        const starsContainer = document.getElementById('starsContainer');
+        const loveReason = document.getElementById('loveReason');
+        const characterCount = document.getElementById('characterCount');
+        const typingText = document.getElementById('typingText');
+        const hintText = document.getElementById('hintText');
+        
+        // Typing effect for initial message
+        const messages = [
+            "Tôi có một bí mật muốn thổ lộ với em...",
+            "Tôi đã thích em từ lâu lắm rồi...",
+            "Hôm nay tôi muốn nói điều quan trọng này..."
+        ];
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < randomMessage.length) {
+                typingText.innerHTML += randomMessage.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50 + Math.random() * 50);
+            } else {
+                typingText.style.borderRight = 'none';
+            }
+        }
+        
+        // Create floating hearts
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤', '🤍'][Math.floor(Math.random() * 9)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = -50 + 'px';
+                heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+                heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 200);
+        }
+        
+        // Create flowers
+        function createFlowers() {
+            const emojis = ['🌸', '🌹', '🌺', '🌻', '🌼', '🏵️', '💐', '🍀'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.className = 'flower';
+                    flower.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    flower.style.left = Math.random() * 100 + 'vw';
+                    flower.style.top = -50 + 'px';
+                    flower.style.animationDuration = Math.random() * 3 + 5 + 's';
+                    flower.style.animationDelay = Math.random() * 2 + 's';
+                    flower.style.fontSize = Math.random() * 10 + 15 + 'px';
+                    flowersContainer.appendChild(flower);
+                    
+                    setTimeout(() => {
+                        flower.remove();
+                    }, 8000);
+                }, i * 200);
+            }
+        }
+        
+        // Create stars
+        function createStars() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.innerHTML = '✨';
+                    star.style.left = Math.random() * 100 + 'vw';
+                    star.style.top = Math.random() * 100 + 'vh';
+                    star.style.animation = `starGlow ${Math.random() * 2 + 1}s infinite`;
+                    star.style.animationDelay = Math.random() * 3 + 's';
+                    star.style.fontSize = Math.random() * 10 + 10 + 'px';
+                    starsContainer.appendChild(star);
+                }, i * 100);
+            }
+        }
+        
+        // Create fireworks
+        function createFireworks() {
+            const colors = ['#ff6b6b', '#ffb8b8', '#ffdd59', '#7bed9f', '#70a1ff', '#5352ed', '#ff9ff3', '#feca57'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.left = Math.random() * 100 + 'vw';
+                    firework.style.top = Math.random() * 100 + 'vh';
+                    firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    firework.style.width = Math.random() * 8 + 4 + 'px';
+                    firework.style.height = Math.random() * 8 + 4 + 'px';
+                    firework.style.borderRadius = '50%';
+                    firework.style.boxShadow = `0 0 10px 2px ${colors[Math.floor(Math.random() * colors.length)]}`;
+                    fireworksContainer.appendChild(firework);
+                    
+                    // Firework explosion
+                    setTimeout(() => {
+                        firework.style.transition = 'all 1s';
+                        firework.style.transform = 'scale(20)';
+                        firework.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            firework.remove();
+                        }, 1000);
+                    }, 100);
+                }, i * 100);
+            }
+            
+            // Add confetti
+            createConfetti();
+        }
+        
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'];
+            
+            for (let i = 0; i < 200; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = -10 + 'px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 5 + 3 + 'px';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confetti.style.opacity = '1';
+                    document.body.appendChild(confetti);
+                    
+                    // Confetti fall
+                    const animationDuration = Math.random() * 3 + 2;
+                    confetti.style.transition = `all ${animationDuration}s linear`;
+                    
+                    setTimeout(() => {
+                        confetti.style.top = '100vh';
+                        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, animationDuration * 1000);
+                }, i * 20);
+            }
+        }
+        
+        // Create floating kisses
+        function createFloatingKisses() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const kiss = document.createElement('div');
+                    kiss.className = 'floating-kiss';
+                    kiss.innerHTML = '💋';
+                    kiss.style.left = Math.random() * 80 + 10 + 'vw';
+                    kiss.style.top = Math.random() * 50 + 50 + 'vh';
+                    kiss.style.animationDuration = Math.random() * 3 + 2 + 's';
+                    kiss.style.animationDelay = Math.random() * 2 + 's';
+                    kiss.style.fontSize = Math.random() * 20 + 20 + 'px';
+                    document.body.appendChild(kiss);
+                    
+                    setTimeout(() => {
+                        kiss.remove();
+                    }, 5000);
+                }, i * 500);
+            }
+        }
+        
+        // Next step transition
+        function nextStep(current, next) {
+            const currentEl = document.getElementById(current);
+            const nextEl = document.getElementById(next);
+            
+            currentEl.style.animation = 'fadeOut 0.5s forwards';
+            
+            setTimeout(() => {
+                currentEl.classList.add('hidden');
+                nextEl.classList.remove('hidden');
+                nextEl.style.animation = 'fadeIn 0.5s forwards';
+                
+                if (next === 'step5-yes') {
+                    startCountdown();
+                    createFloatingKisses();
+                }
+                
+                if (next === 'step6') {
+                    document.body.style.background = 'linear-gradient(135deg, #ff6b8b, #ff8e8e, #ffb3b3)';
+                }
+            }, 500);
+        }
+        
+        // Run away button
+        function runAway() {
+            const btnRect = btnNo.getBoundingClientRect();
+            const maxX = window.innerWidth - btnRect.width;
+            const maxY = window.innerHeight - btnRect.height;
+            
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            
+            btnNo.style.position = 'absolute';
+            btnNo.style.left = newX + 'px';
+            btnNo.style.top = newY + 'px';
+            
+            // Thêm hiệu ứng trái tim tan vỡ
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const brokenHeart = document.createElement('div');
+                    brokenHeart.innerHTML = '💔';
+                    brokenHeart.style.position = 'absolute';
+                    brokenHeart.style.left = newX + Math.random() * 50 + 'px';
+                    brokenHeart.style.top = newY + Math.random() * 50 + 'px';
+                    brokenHeart.style.fontSize = '24px';
+                    brokenHeart.style.animation = 'fadeOut 1s forwards';
+                    document.body.appendChild(brokenHeart);
+                    
+                    setTimeout(() => {
+                        brokenHeart.remove();
+                    }, 1000);
+                }, i * 200);
+            }
+            
+            // Thêm gợi ý hài hước
+            hintText.textContent = "Sai rồi! Nhấn vào câu trả lời đúng đi nào 😘";
+        }
+        
+        // Check quiz answer
+        function checkAnswer(element, isCorrect) {
+            const options = document.querySelectorAll('.quiz-option');
+            
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+            
+            if (isCorrect) {
+                element.classList.add('correct');
+                setTimeout(() => {
+                    nextStep('step2', 'step3');
+                }, 1000);
+                
+                // Tạo hiệu ứng khi trả lời đúng
+                createStars();
+            } else {
+                element.classList.add('wrong');
+                
+                // Thêm gợi ý hài hước
+                hintText.textContent = "Sai rồi! Cố lên, bạn làm được mà 💪";
+            }
+        }
+        
+        // Show real reason
+        function showRealReason() {
+            if (loveReason.value.trim() === '') {
+                alert("Bạn chưa viết lý do kìa! Viết gì đó đi ❤️");
+                return;
+            }
+            
+            if (loveReason.value.length < 10) {
+                alert("Viết dài hơn chút nữa đi, tôi muốn biết nhiều hơn mà 😊");
+                return;
+            }
+            
+            nextStep('step3', 'step4');
+        }
+        
+        // Character count for textarea
+        loveReason.addEventListener('input', function() {
+            const count = this.value.length;
+            characterCount.textContent = `${count}/200 ký tự`;
+            
+            if (count > 150) {
+                characterCount.style.color = '#ff4757';
+            } else if (count > 100) {
+                characterCount.style.color = '#ff6b8b';
+            } else {
+                characterCount.style.color = '#888';
+            }
+        });
+        
+        // Start countdown
+        function startCountdown() {
+            let seconds = 5;
+            
+            const timer = setInterval(() => {
+                countdownEl.textContent = `Chính thức hẹn hò trong: ${seconds} giây`;
+                seconds--;
+                
+                if (seconds < 0) {
+                    clearInterval(timer);
+                    nextStep('step5-yes', 'step6');
+                    createFireworks();
+                    music.volume = 0.2;
+                }
+            }, 1000);
+        }
+        
+        // Show final step
+        function showFinal() {
+            nextStep('step5-yes', 'step6');
+            createFireworks();
+            createFloatingKisses();
+        }
+        
+        // Music control
+        musicControl.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                musicControl.textContent = '🔊';
+                musicControl.style.background = 'var(--light-pink)';
+            } else {
+                music.pause();
+                musicControl.textContent = '🔇';
+                musicControl.style.background = 'white';
+            }
+        });
+        
+        // Initialize
+        window.onload = function() {
+            createHearts();
+            createFlowers();
+            typeWriter();
+            
+            // Add animations to style
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes fadeOut {
+                    to {
+                        opacity: 0;
+                        transform: scale(0.9);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Try to autoplay music (may not work due to browser restrictions)
+            music.volume = 0.3;
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    musicControl.textContent = '🔇';
+                });
+            }
+        };
+    </script>
+</body>
+</html>
